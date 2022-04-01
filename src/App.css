@@ -20,7 +20,7 @@ form {
   border: 2px solid grey;
 }
 input,select,label {
-  width: 100px;
+  width: 160px;
   text-align: center;
   margin: auto;
 }
