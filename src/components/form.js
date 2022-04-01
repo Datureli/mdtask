@@ -3,17 +3,25 @@ import { useForm } from "react-hook-form";
 
 const Form = () => {
   const [completedForms, setCompletedForms] = useState([]);
-  const {register, formState: { errors }, handleSubmit,} = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
   const onSubmit = (data) => {
-    setCompletedForms(oldArray => [...oldArray,data])
+    setCompletedForms((oldArray) => [...oldArray, data]);
     console.log(data);
-  } 
+  };
+  const removeProduct = (index) => {
+      setCompletedForms.splice(index, 1);
+  }
 
   return (
     <div>
-      <form className="formCard" onSubmit={handleSubmit( onSubmit )}>
+      <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
+        <h1>New product form</h1>
         <label>
-          ProductName
+          Product name
           <input
             type="text"
             {...register("productName", {
@@ -22,13 +30,43 @@ const Form = () => {
               maxLength: 20,
             })}
           />
-          {errors.productName?.type === "required" &&
-            "product name is required"}
+          <p className="error">
+            {errors.productName?.type === "required" && "product is required"}
+            {errors.productName?.type === "minLength" &&
+              "min product length is 3"}
+            {errors.productName?.type === "maxLength" &&
+              "max product length is 20"}
+          </p>
         </label>
         <label>
           Description:
-          <input type="text" {...register("description", { required: true })} />
-          {errors.description?.type === "required" && "description is required"}
+          <input
+            type="text"
+            {...register("description", {
+              required: true,
+              minLength: 3,
+              maxLength: 20,
+            })}
+          />
+          <p className="error">
+            {errors.description?.type === "required" &&
+              "description is required"}
+            {errors.productName?.type === "minLength" &&
+              "min description length is 3"}
+            {errors.productName?.type === "maxLength" &&
+              "max description length is 20"}
+          </p>
+        </label>
+        <label>
+          Price:
+          <input
+            type="number"
+            {...register("price", { required: true, min: 1, max: 20000 })}
+          />
+          <p className="error">
+            {" "}
+            {errors.price?.type === "required" && "price is required"}
+          </p>
         </label>
         <label>
           Category:
@@ -40,27 +78,26 @@ const Form = () => {
             <option value="Oprogramowanie">Oprogramowanie</option>
             <option value="Inne">Inne</option>
           </select>
-          {errors.type?.type === "required" && "type is required"}
+          <p className="error">
+            {" "}
+            {errors.type?.type === "required" && "type is required"}
+          </p>
         </label>
-        <label>
-          Price:
-          <input
-            type="number"
-            {...register("price", { required: true, min: 1, max: 20000 })}
-          />
-          {errors.price?.type === "required" && "price is required"}
-        </label>
+
         <input type="submit" value="Wyślij" />
       </form>
-      
+
       <ul>
         {completedForms &&
-          completedForms.map((form, index) => <li key={index}>
-           {form.productName}
-           {form.description}
-           {form.type}
-           {form.price}
-          </li>)}
+          completedForms.map((form, index) => (
+            <li key={index}>
+              <p> Product name:{form.productName}</p>
+              <p> description: {form.description}</p>
+              <p> type: {form.type}</p>
+              <p> price: {form.price}</p>
+              <button onClick={removeProduct}>remove</button>
+            </li>
+          ))}
       </ul>
     </div>
   );

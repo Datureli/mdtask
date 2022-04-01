@@ -2,27 +2,61 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 form {
   display: grid;
+  width: 360px;
+  height: 500px;
 }
-.formCard {
-  width:360px;
-  height:300px;
-  background:#545454;
-  color:white;
-  padding: 20px;
-  margin:10px auto;
+form h1 {
+  margin: 10px 0;
+  height: 10px;
+}
+.error {
+  display: flex;
+  color: red;
+  margin: 5px auto;
   text-align: center;
+}
+
+.formCard {
+  background: #545454;
+  color: white;
+  margin:10px auto;
   border: 2px solid grey;
 }
-input,select,label {
+input,
+label {
   width: 160px;
+  height: 20px;
   text-align: center;
   margin: auto;
+}
+select {
+  width: 168px;
+  height: 30px;
+  text-align: center;
+  margin: auto;
+}
+ul {
+  display: flex;
+}
+li {
+  display: block;
+  border: 2px solid grey;
+  max-width: 200px;
+  margin: 5px;
+  padding: 10px;
+}
+input[type="submit"] {
+  width: 80px;
+  height: 30px;
+  padding: 0;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  background-color: #1f6191;
 }
 
 @media (prefers-reduced-motion: no-preference) {
