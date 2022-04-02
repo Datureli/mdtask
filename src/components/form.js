@@ -22,9 +22,10 @@ const Form = () => {
       ...completedForms.slice(0, index),
       ...completedForms.slice(index + 1),
     ]);
+    setProductCounter(productCounter - 1)
   };
   return (
-    <div>
+    <div className="flex">
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
         <h1>New product form</h1>
         <label>
@@ -104,7 +105,9 @@ const Form = () => {
               <button onClick={() => removeProduct(index)}>remove</button>
             </li>
           ))}
-        <h2>
+    
+      </ul>
+      <h2>
           total price:{" "}
           {completedForms.reduce(
             (total, form) => total + parseInt(form.price),
@@ -112,7 +115,6 @@ const Form = () => {
           )}
         </h2>
         <h2 >Liczba produktów: {productCounter}</h2>
-      </ul>
     </div>
   );
 };

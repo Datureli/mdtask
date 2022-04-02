@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+.flex {
+  display: flex;
+}
 
 form {
   display: grid;
@@ -24,7 +27,7 @@ h2 {
 .formCard {
   background: #545454;
   color: white;
-  margin:10px auto;
+  margin: 20px 80px;
   border: 2px solid grey;
 }
 input,
@@ -41,12 +44,13 @@ select {
   margin: auto;
 }
 ul {
-  display: flex;
+  display: block;
 }
 li {
   display: block;
   border: 2px solid grey;
   max-width: 200px;
+  height: 220px;
   margin: 5px;
   padding: 10px;
 }
