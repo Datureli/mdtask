@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import useLocalStorage from "use-local-storage";
 
 const Form = () => {
+  const handleData = () => {
+        const { productCounter,completedForms } = this.useState
+        localStorage.setItem('productCounter', productCounter)
+        localStorage.setItem('completedForms', completedForms)
+    }
   let [productCounter,setProductCounter] = useState(0)
   const { register,formState: { errors },handleSubmit,} = useForm({
     defaultValues: {
@@ -24,6 +30,11 @@ const Form = () => {
     ]);
     setProductCounter(productCounter - 1)
   };
+ function componentDidMount() {
+    const productCounter = localStorage.getItem('productCounter') 
+    const completedForms =  localStorage.getItem('completedForms')
+    this.setState({ completedForms, productCounter });
+  }
   return (
     <div className="flex">
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>

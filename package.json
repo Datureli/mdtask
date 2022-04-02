@@ -10,6 +10,7 @@
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.29.0",
     "react-scripts": "5.0.0",
+    "use-local-storage": "^2.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
