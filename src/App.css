@@ -11,6 +11,9 @@ form h1 {
   margin: 10px 0;
   height: 10px;
 }
+h2 {
+  margin: 10px;
+}
 .error {
   display: flex;
   color: red;
