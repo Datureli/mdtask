@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const Form = () => {
-    const { register,control, formState: { errors }, handleSubmit} = useForm({
+    const { register, formState: { errors }, handleSubmit} = useForm({
         defaultValues: {
             products: [{productName: 'komputer',description: 'opis',type: '',price: 0}]
         }
   });
-  const { fields, remove} = useFieldArray(
-    {
-      control,
-      name: "test",
-    }
-  );
   const [completedForms, setCompletedForms] = useState([]);
 
   const onSubmit = (data) => {
@@ -23,8 +17,7 @@ const Form = () => {
     setCompletedForms([...completedForms.slice(0, index), ...completedForms.slice(index + 1)]);
   };
   const totalPrice = () => {
-    const s = setCompletedForms.reduce((s, { price }) => s + price, 0);
-    return s;
+
   };
 
   return (
@@ -97,7 +90,6 @@ const Form = () => {
 
         <input type="submit" value="Wyślij" />
       </form>
-
       <ul>
         {completedForms &&
           completedForms.map((form, index) => (
@@ -107,8 +99,11 @@ const Form = () => {
               <p> type: {form.type}</p>
               <p> price: {form.price}</p>
               <button onClick={() => removeProduct(index)}>remove</button>
+             
             </li>
+          
           ))}
+           <h1>total price: {completedForms.reduce((total, form) => total+(parseInt(form.price)),0)}</h1>
       </ul>
     </div>
   );
