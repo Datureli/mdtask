@@ -1,26 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 
 const Form = () => {
-  const handleData = () => {
-        const { productCounter,completedForms } = this.useState
-        localStorage.setItem('productCounter', productCounter)
-        localStorage.setItem('completedForms', completedForms)
-    }
-  let [productCounter,setProductCounter] = useState(0)
-  const { register,formState: { errors },handleSubmit,} = useForm({
-    defaultValues: {
-      products: [
-        { productName: "komputer", description: "opis", type: "", price: 0 },
-      ],
-    },
-  });
-  const [completedForms, setCompletedForms] = useState([]);
+  let [productCounter, setProductCounter] = useLocalStorage(0);
+  const {register,formState: { errors }, handleSubmit,} = useForm();
+  const [completedForms, setCompletedForms] = useLocalStorage("completedForms","");
 
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
-    setProductCounter(productCounter + 1)
+    setProductCounter(productCounter + 1);
     console.log(data);
   };
   const removeProduct = (index) => {
@@ -28,13 +17,12 @@ const Form = () => {
       ...completedForms.slice(0, index),
       ...completedForms.slice(index + 1),
     ]);
-    setProductCounter(productCounter - 1)
+    setProductCounter(productCounter - 1);
   };
- function componentDidMount() {
-    const productCounter = localStorage.getItem('productCounter') 
-    const completedForms =  localStorage.getItem('completedForms')
-    this.setState({ completedForms, productCounter });
-  }
+  const resetState = () => {
+   // localStorage.clear();
+  };
+
   return (
     <div className="flex">
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
@@ -60,6 +48,7 @@ const Form = () => {
         <label>
           Description:
           <input
+            onChange={(e) => setCompletedForms(e.target.value)}
             type="text"
             {...register("description", {
               required: true,
@@ -106,7 +95,7 @@ const Form = () => {
         <input type="submit" value="Wyślij" />
       </form>
       <ul>
-        {completedForms &&  
+        {completedForms &&
           completedForms.map((form, index) => (
             <li key={index}>
               <p> Product name:{form.productName}</p>
@@ -116,16 +105,16 @@ const Form = () => {
               <button onClick={() => removeProduct(index)}>remove</button>
             </li>
           ))}
-    
       </ul>
       <h2>
-          total price:{" "}
-          {completedForms.reduce(
-            (total, form) => total + parseInt(form.price),
-            0
-          )}
-        </h2>
-        <h2 >Liczba produktów: {productCounter}</h2>
+        total price:{" "}
+        {completedForms.reduce(
+          (total, form) => total + parseInt(form.price),
+          0
+        )}
+      </h2>
+      <h2>Liczba produktów: {productCounter}</h2>
+      <button onClick={() => resetState}>reset state</button>
     </div>
   );
 };
