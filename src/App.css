@@ -3,6 +3,8 @@
 }
 .flex {
   display: flex;
+  text-align: center;
+  margin: auto;
 }
 
 form {
@@ -16,6 +18,9 @@ form h1 {
 }
 h2 {
   margin: 10px;
+}
+.grid {
+  display: grid;
 }
 .error {
   display: flex;
@@ -44,15 +49,16 @@ select {
   margin: auto;
 }
 ul {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }
 li {
   display: block;
   border: 2px solid grey;
   max-width: 200px;
   height: auto;
-  margin: 5px;
-  padding: 10px;
+  padding: 5px;
 }
 input[type="submit"] {
   width: 80px;
@@ -66,9 +72,11 @@ input[type="submit"]:hover {
   background-color: #1f6191;
 }
 button {
-height: 20px;
+  width: 168px;
+  height: 30px;
+  text-align: center;
+  margin: auto;
 }
-
 
 .App-header {
   background-color: #282c34;
@@ -82,13 +90,4 @@ height: 20px;
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
