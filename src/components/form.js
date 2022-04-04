@@ -7,8 +7,7 @@ const Form = () => {
   let [filteredCategory, setFilteredCategory] = useState();
   let [productCounter, setProductCounter] = useLocalStorage(0);
 
-  const {
-    register,
+  const { register,
     formState: { errors },
     handleSubmit,
   } = useForm();
@@ -143,7 +142,7 @@ const Form = () => {
       </form>
       <div className="grid">
         <ul>
-          {filteredList.map((form, index) => (
+          {completedForms && completedForms.map((form, index) => (
             <li {...form} key={index}>
               <p> Product name:{form.productName}</p>
               <p> description: {form.description}</p>
@@ -154,17 +153,16 @@ const Form = () => {
           ))}
         </ul>
         <div className="flex">
-        <h2>
-          total price:{" "}
-          {completedForms.reduce(
-            (total, form) => total + parseInt(form.price),
-            0
-          )}
-        </h2>
+            <h2>
+            total price:
+            {completedForms && completedForms.reduce(
+                (total, form) => total + parseInt(form.price),  0
+            )}
+            </h2>
         <h2>Liczba produktów: {productCounter}</h2>
+        <h2>Liczba produktów kategori: {categoryCounter}</h2>
         </div>
     
-
         <div>
           <button onClick={() => sortProductByName()}>Sort by Name</button>
           <button onClick={() => sortProductByDescription()}>
