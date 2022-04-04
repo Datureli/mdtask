@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 
 const Form = () => {
-  let [categoryCounter, setCategoryCounter] = useLocalStorage(0);
+  let [categoryCounter, setCategoryCounter] = useLocalStorage("categoryCounter",0);
   let [filteredCategory, setFilteredCategory] = useState();
-  let [productCounter, setProductCounter] = useLocalStorage(0);
+  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
 
   const { register,
     formState: { errors },
@@ -18,7 +18,7 @@ const Form = () => {
 
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
-    setProductCounter(productCounter + 1);
+    setProductCounter(parseInt(productCounter + 1));
     setCategoryCounter(() => {
       const calculate = categoryCounter + 1;
       return calculate;
@@ -78,17 +78,17 @@ const Form = () => {
         <label>
           Product name
           <input
-            {...register("productName", {
+            {...register("productname", {
               required: true,
               minLength: 3,
               maxLength: 20,
             })}
           />
           <p className="error">
-            {errors.productName?.type === "required" && "product is required"}
-            {errors.productName?.type === "minLength" &&
+            {errors.productname?.type === "required" && "product is required"}
+            {errors.productname?.type === "minLength" &&
               "min product length is 3"}
-            {errors.productName?.type === "maxLength" &&
+            {errors.productname?.type === "maxLength" &&
               "max product length is 20"}
           </p>
         </label>
@@ -106,9 +106,9 @@ const Form = () => {
           <p className="error">
             {errors.description?.type === "required" &&
               "description is required"}
-            {errors.productName?.type === "minLength" &&
+            {errors.productname?.type === "minLength" &&
               "min description length is 3"}
-            {errors.productName?.type === "maxLength" &&
+            {errors.productname?.type === "maxLength" &&
               "max description length is 20"}
           </p>
         </label>
@@ -144,7 +144,7 @@ const Form = () => {
         <ul>
           {completedForms && completedForms.map((form, index) => (
             <li {...form} key={index}>
-              <p> Product name:{form.productName}</p>
+              <p> Product name:{form.productname}</p>
               <p> description: {form.description}</p>
               <p> type: {form.type}</p>
               <p> price: {form.price}</p>
