@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 import Filter from "./filter";
@@ -114,7 +114,7 @@ const Form = () => {
         <ul>
           {completedForms &&
             completedForms.map((form, index) => (
-              <li {...form} key={index}>
+              <li  draggable key={index}>
                 <p> Product name:{form.productname}</p>
                 <p> description: {form.description}</p>
                 <p> type: {form.type}</p>
@@ -133,7 +133,6 @@ const Form = () => {
               )}
           </h2>
           <h2>Liczba produktów: {productCounter}</h2>
-
           <h2>Liczba produktów kategori: {categoryCounter}</h2>
         </div>
 
