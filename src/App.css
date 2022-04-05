@@ -53,9 +53,11 @@ ul {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
 }
+.buttonsGroup {
+
+}
 li {
   display: block;
-  border: 2px solid grey;
   max-width: 200px;
   height: auto;
   padding: 5px;
@@ -77,6 +79,22 @@ button {
   text-align: center;
   margin: auto;
 }
+.formContainer {
+  width: auto;
+  max-height: 300px;
+  text-align: center;
+  border: 2px solid black;
+  margin: 20px 0px 20px 0;
+  margin-right: 20px;
+}
+.removeButton {
+  width: 10px;
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+}
 
 .App-header {
   background-color: #282c34;
@@ -86,8 +104,4 @@ button {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }

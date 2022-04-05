@@ -19,7 +19,7 @@ const Form = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [completedForms, setCompletedForms] = useLocalStorage(
+  let [completedForms, setCompletedForms] = useLocalStorage(
     "completedForms",
     ""
   );
@@ -40,7 +40,13 @@ const Form = () => {
   const resetState = () => {
     localStorage.clear();
   };
-
+  const onDragStart = (ev, id) => {
+    ev.dataTransfer.setCompletedForms("id", id);
+  };
+const removeAllItem = () => {
+    setCompletedForms((oldArray) => [])
+    setProductCounter(productCounter = 0)
+}
   return (
     <div className="flex">
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
@@ -110,19 +116,34 @@ const Form = () => {
 
         <input type="submit" value="Wyślij" />
       </form>
+
       <div className="grid">
-        <ul>
-          {completedForms &&
-            completedForms.map((form, index) => (
-              <li  draggable key={index}>
-                <p> Product name:{form.productname}</p>
-                <p> description: {form.description}</p>
-                <p> type: {form.type}</p>
-                <p> price: {form.price}</p>
-                <button onClick={() => removeProduct(index)}>x</button>
-              </li>
-            ))}
-        </ul>
+        <div className="formContainer">
+          <ul>
+            {completedForms &&
+              completedForms.map((form, index) => (
+                <li
+                  onDrop={(e) => this.onDrop(e, "complete")}
+                  onDragStart={(e) => this.onDragStart(e, form.productname)}
+                  draggable
+                  key={index}
+                >
+                    <div className="flex">
+                    <select>
+                  
+                    <option> {form.productname}</option>
+                    <option> Description: {form.description}</option>
+                    <option> Type: {form.type}</option>
+                    <option> Price: {form.price}</option>
+                  </select>
+
+                  <button className="removeButton" onClick={() => removeProduct(index)}>x</button>
+                    </div>
+              
+                </li>
+              ))}
+          </ul>
+        </div>
         <div className="flex">
           <h2>
             total price:
@@ -133,13 +154,19 @@ const Form = () => {
               )}
           </h2>
           <h2>Liczba produktów: {productCounter}</h2>
-          <h2>Liczba produktów kategori: {categoryCounter}</h2>
+          <h2>kategorie: {categoryCounter}</h2>
         </div>
 
-        <div>
-          <Sort completedForms={completedForms} setCompletedForms={setCompletedForms} />
-          <Filter />
+        <div className="buttonsGroup">
+          <Sort
+            completedForms={completedForms}
+            setCompletedForms={setCompletedForms}
+          />
+
+          <button onClick={() => resetState()}>toggle dark</button>
+          <button onClick={() => removeAllItem()}>remove all items</button>
           <button onClick={() => resetState()}>clear state</button>
+          <Filter />
         </div>
       </div>
     </div>
