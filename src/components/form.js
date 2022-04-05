@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
+import Filter from "./filter";
+import Sort from "./sortby";
 
 const Form = () => {
-  let [categoryCounter, setCategoryCounter] = useLocalStorage("categoryCounter",0);
-  let [filteredCategory, setFilteredCategory] = useState();
-  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
+  let [categoryCounter, setCategoryCounter] = useLocalStorage(
+    "categoryCounter",
+    [0, 0, 0, 0]
+  );
+  let [productCounter, setProductCounter] = useLocalStorage(
+    "productCounter",
+    0
+  );
 
-  const { register,
+  const {
+    register,
     formState: { errors },
     handleSubmit,
   } = useForm();
@@ -19,10 +27,7 @@ const Form = () => {
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
     setProductCounter(parseInt(productCounter + 1));
-    setCategoryCounter(() => {
-      const calculate = categoryCounter + 1;
-      return calculate;
-    });
+    setCategoryCounter();
     console.log(data);
   };
   const removeProduct = (index) => {
@@ -36,41 +41,6 @@ const Form = () => {
     localStorage.clear();
   };
 
-  function getFilteredList() {
-    if (!filteredCategory) {
-      return completedForms;
-    }
-    return completedForms.filter((form) => form.type === filteredCategory);
-  }
-
-  var filteredList = useMemo(getFilteredList, [
-    filteredCategory,
-    completedForms,
-  ]);
-
-  function handleCategoryChange(event) {
-    setFilteredCategory(event.target.value);
-  }
-  const sortProductByCategory = () => {
-    setCompletedForms(
-      completedForms.slice().sort((a, b) => (a.type > b.type ? 1 : -1))
-    );
-  };
-  const sortProductByName = () => {
-    setCompletedForms(
-      completedForms.slice().sort((a, b) => (a.name < b.name ? 1 : -1))
-    );
-  };
-  const sortProductByDescription = () => {
-    setCompletedForms(
-      completedForms.slice().sort((a, b) => (a.description > b.description ? 1 : -1))
-    );
-  };
-  const sortProductByPrice = () => {
-    setCompletedForms(
-      completedForms.slice().sort((a, b) => (a.price > b.price ? 1 : -1))
-    );
-  };
   return (
     <div className="flex">
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
@@ -142,52 +112,35 @@ const Form = () => {
       </form>
       <div className="grid">
         <ul>
-          {completedForms && completedForms.map((form, index) => (
-            <li {...form} key={index}>
-              <p> Product name:{form.productname}</p>
-              <p> description: {form.description}</p>
-              <p> type: {form.type}</p>
-              <p> price: {form.price}</p>
-              <button onClick={() => removeProduct(index)}>x</button>
-            </li>
-          ))}
+          {completedForms &&
+            completedForms.map((form, index) => (
+              <li {...form} key={index}>
+                <p> Product name:{form.productname}</p>
+                <p> description: {form.description}</p>
+                <p> type: {form.type}</p>
+                <p> price: {form.price}</p>
+                <button onClick={() => removeProduct(index)}>x</button>
+              </li>
+            ))}
         </ul>
         <div className="flex">
-            <h2>
+          <h2>
             total price:
-            {completedForms && completedForms.reduce(
-                (total, form) => total + parseInt(form.price),  0
-            )}
-            </h2>
-        <h2>Liczba produktów: {productCounter}</h2>
-        <h2>Liczba produktów kategori: {categoryCounter}</h2>
+            {completedForms &&
+              completedForms.reduce(
+                (total, form) => total + parseInt(form.price),
+                0
+              )}
+          </h2>
+          <h2>Liczba produktów: {productCounter}</h2>
+
+          <h2>Liczba produktów kategori: {categoryCounter}</h2>
         </div>
-    
+
         <div>
-          <button onClick={() => sortProductByName()}>Sort by Name</button>
-          <button onClick={() => sortProductByDescription()}>
-            Sort by Description
-          </button>
-          <button onClick={() => sortProductByCategory()}>
-            Sort by Category
-          </button>
-          <button onClick={() => sortProductByPrice()}>
-            Sort by price
-          </button>
-          <button onClick={() => resetState()}>reset state</button>
-          <select
-            name="category-list"
-            id="category-list"
-            onChange={handleCategoryChange}
-          >
-            <option value="">Filter by Category</option>
-            <option value="Podzespoły">Podzespoły</option>
-            <option value="Urządzenia peryferyjne">
-              Urządzenia peryferyjne
-            </option>
-            <option value="Oprogramowanie">oprogramowanie</option>
-            <option value="Inne">Inne</option>
-          </select>
+          <Sort completedForms={completedForms} setCompletedForms={setCompletedForms} />
+          <Filter />
+          <button onClick={() => resetState()}>clear state</button>
         </div>
       </div>
     </div>
