@@ -2,29 +2,16 @@ import React, {useState,useMemo} from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 import Sort from "./sortby";
+import TotalPrice from "./totalprice";
 
 const Form = () => {
-  let [categoryCounter, setCategoryCounter] = useLocalStorage(
-    "categoryCounter",
-    0
-  );
-  let [productCounter, setProductCounter] = useLocalStorage(
-    "productCounter",
-    0
-  );
+  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
   let [filteredCategory, setFilteredCategory] = useState();
 
   function handleCategoryChange(event) {
     setFilteredCategory(event.target.value);
   }
-
-
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+  const { register, formState: { errors }, handleSubmit, } = useForm();
   let [completedForms, setCompletedForms] = useLocalStorage(
     "completedForms",
     ""
@@ -59,7 +46,7 @@ const Form = () => {
       (form) => form.type === filteredCategory
     );
   }
-  var filteredList = useMemo(getFilteredList, [
+  let filteredList = useMemo(getFilteredList, [
     filteredCategory,
     completedForms,
   ]);
@@ -159,16 +146,8 @@ const Form = () => {
     </select>
         </div>
         <div className="flex">
-          <h2>
-            total price:
-            {completedForms &&
-              completedForms.reduce(
-                (total, form) => total + parseInt(form.price),
-                0
-              )}
-          </h2>
+            <TotalPrice completedForms={completedForms} />
           <h2>Liczba produktów: {productCounter}</h2>
-          <h2>kategorie: {categoryCounter}</h2>
         </div>
         <div className="formContainer">
           <ul>
