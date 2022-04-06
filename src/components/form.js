@@ -3,14 +3,12 @@ import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 import Sort from "./sortby";
 import TotalPrice from "./totalprice";
+import Filter from './filter'
 
 const Form = () => {
   let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
   let [filteredCategory, setFilteredCategory] = useState();
 
-  function handleCategoryChange(event) {
-    setFilteredCategory(event.target.value);
-  }
   const { register, formState: { errors }, handleSubmit, } = useForm();
   let [completedForms, setCompletedForms] = useLocalStorage(
     "completedForms",
@@ -133,17 +131,7 @@ const Form = () => {
           <button onClick={() => resetState()}>toggle dark</button>
           <button onClick={() => removeAllItem()}>remove all items</button>
           <button onClick={() => resetState()}>clear state</button>
-          <select
-      name="category-list"
-      id="category-list"
-      onChange={handleCategoryChange}
-    >
-      <option value="">Filter by Category</option>
-      <option value="Podzespoły">Podzespoły</option>
-      <option value="Urządzenia peryferyjne">Urządzenia peryferyjne</option>
-      <option value="Oprogramowanie">Oprogramowanie</option>
-      <option value="Inne">Inne</option>
-    </select>
+          <Filter setFilteredCategory={setFilteredCategory} />
         </div>
         <div className="flex">
             <TotalPrice completedForms={completedForms} />

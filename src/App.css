@@ -1,4 +1,8 @@
 .App {
+  color: var(--text-primary);
+  background-color: var(--background);
+  font-size: large;
+  transition: all 0.5s;
   text-align: center;
 }
 .flex {

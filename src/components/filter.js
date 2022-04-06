@@ -1,24 +1,11 @@
 import React, { useState, useMemo } from "react";
 
 const Filter = (props) => {
-  let [filteredCategory, setFilteredCategory] = useState();
 
   function handleCategoryChange(event) {
-    setFilteredCategory(event.target.value);
+    props.setFilteredCategory(event.target.value);
   }
-  function getFilteredList() {
-    if (!filteredCategory) {
-      return props.completedForms;
-    }
-    return props.completedForms.filter(
-      (form) => form.type === filteredCategory
-    );
-  }
-
-  var filteredList = useMemo(getFilteredList, [
-    props.filteredCategory,
-    props.completedForms,
-  ]);
+  
 
   return (
     <select
