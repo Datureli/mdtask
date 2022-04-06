@@ -1,19 +1,29 @@
-import React, {useState,useMemo} from "react";
+import React, { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
 import Sort from "./sortby";
 import TotalPrice from "./totalprice";
-import Filter from './filter'
+import Filter from "./filter";
 
-const Form = () => {
-  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
+const Form = (props) => {
+  let [productCounter, setProductCounter] = useLocalStorage(
+    "productCounter",
+    0
+  );
   let [filteredCategory, setFilteredCategory] = useState();
+  let [newCategory,setNewCategory] = useLocalStorage("newcategory","")
 
-  const { register, formState: { errors }, handleSubmit, } = useForm();
+  const { register,formState: { errors },handleSubmit,} = useForm();
   let [completedForms, setCompletedForms] = useLocalStorage(
     "completedForms",
     ""
   );
+  const addNewCategory = () => {
+      setNewCategory()
+  }
+  const handleCategory = (event) => {
+      setNewCategory(event.target.value)
+  }
 
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
@@ -40,9 +50,7 @@ const Form = () => {
     if (!filteredCategory) {
       return completedForms;
     }
-    return completedForms.filter(
-      (form) => form.type === filteredCategory
-    );
+    return completedForms.filter((form) => form.type === filteredCategory);
   }
   let filteredList = useMemo(getFilteredList, [
     filteredCategory,
@@ -112,11 +120,13 @@ const Form = () => {
             </option>
             <option value="Oprogramowanie">Oprogramowanie</option>
             <option value="Inne">Inne</option>
+            <option value={newCategory}>{newCategory}</option>
           </select>
           <p className="error">
             {errors.type?.type === "required" && "type is required"}
           </p>
         </label>
+  
 
         <input type="submit" value="Wyślij" />
       </form>
@@ -128,13 +138,17 @@ const Form = () => {
             setCompletedForms={setCompletedForms}
           />
 
-          <button onClick={() => resetState()}>toggle dark</button>
+          <button onClick={props.switchTheme}>
+            {props.theme === "light" ? "Dark" : "light"}
+          </button>
           <button onClick={() => removeAllItem()}>remove all items</button>
           <button onClick={() => resetState()}>clear state</button>
           <Filter setFilteredCategory={setFilteredCategory} />
+          <input type="text" placeholder="new category" onChange={handleCategory} />
+          <button onClick={addNewCategory}>ok</button>
         </div>
         <div className="flex">
-            <TotalPrice completedForms={completedForms} />
+          <TotalPrice completedForms={completedForms} />
           <h2>Liczba produktów: {productCounter}</h2>
         </div>
         <div className="formContainer">
@@ -149,10 +163,18 @@ const Form = () => {
                     x
                   </button>
 
-                  <p><b>Name:</b> {form.productname}</p>
-                  <p><b>Description:</b> {form.description}</p>
-                  <p><b>Type:</b> {form.type}</p>
-                  <p><b>Price:</b> {form.price}</p>
+                  <p>
+                    <b>Name:</b> {form.productname}
+                  </p>
+                  <p>
+                    <b>Description:</b> {form.description}
+                  </p>
+                  <p>
+                    <b>Type:</b> {form.type}
+                  </p>
+                  <p>
+                    <b>Price:</b> {form.price}
+                  </p>
                 </li>
               ))}
           </ul>

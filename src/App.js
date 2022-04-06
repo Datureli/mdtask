@@ -17,10 +17,7 @@ function App() {
   return (
     <div className="App" data-theme={theme}>
       <Navbar />
-      <button onClick={switchTheme}>
-        {theme === "light" ? "Dark" : "light"}
-      </button>
-      <Form />
+      <Form switchTheme={switchTheme} theme={theme}  />
     </div>
   );
 }
