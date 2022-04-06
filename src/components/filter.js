@@ -1,5 +1,3 @@
-import React, { useState, useMemo } from "react";
-
 const Filter = (props) => {
 
   function handleCategoryChange(event) {

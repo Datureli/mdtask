@@ -19,13 +19,6 @@ const Form = (props) => {
     "completedForms",
     ""
   );
-  const addNewCategory = () => {
-      setNewCategory()
-  }
-  const handleCategory = (event) => {
-      setNewCategory(event.target.value)
-  }
-
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
     setProductCounter(parseInt(productCounter + 1));
@@ -143,13 +136,11 @@ const Form = (props) => {
           <button onClick={() => removeAllItem()}>remove all items</button>
           <ClearState />
           <Filter setFilteredCategory={setFilteredCategory} />
-          <input type="text" placeholder="new category" onChange={handleCategory} />
-          <button onClick={addNewCategory}>ok</button>
+    {//      <input type="text" placeholder="new category" onChange={handleCategory} />
+     //     <button onClick={addNewCategory}>ok</button>
+    }
         </div>
-        <div className="flex">
-          <TotalPrice completedForms={completedForms} />
-          <h2>Liczba produktów: {productCounter}</h2>
-        </div>
+      
         <div className="formContainer">
           <ul>
             {completedForms &&
@@ -177,6 +168,11 @@ const Form = (props) => {
                 </li>
               ))}
           </ul>
+          
+        </div>
+        <div className="flex">
+          <TotalPrice completedForms={completedForms} />
+          <h2>Liczba produktów: {productCounter}</h2>
         </div>
       </div>
     </div>
