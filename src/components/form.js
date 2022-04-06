@@ -4,6 +4,7 @@ import useLocalStorage from "use-local-storage";
 import Sort from "./sortby";
 import TotalPrice from "./totalprice";
 import Filter from "./filter";
+import ClearState from "./resetstate";
 
 const Form = (props) => {
   let [productCounter, setProductCounter] = useLocalStorage(
@@ -37,9 +38,7 @@ const Form = (props) => {
     ]);
     setProductCounter(productCounter - 1);
   };
-  const resetState = () => {
-    localStorage.clear();
-  };
+
 
   const removeAllItem = () => {
     setCompletedForms((oldArray) => []);
@@ -142,7 +141,7 @@ const Form = (props) => {
             {props.theme === "light" ? "Dark" : "light"}
           </button>
           <button onClick={() => removeAllItem()}>remove all items</button>
-          <button onClick={() => resetState()}>clear state</button>
+          <ClearState />
           <Filter setFilteredCategory={setFilteredCategory} />
           <input type="text" placeholder="new category" onChange={handleCategory} />
           <button onClick={addNewCategory}>ok</button>
