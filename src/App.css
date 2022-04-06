@@ -54,10 +54,11 @@ ul {
   gap: 20px;
 }
 .buttonsGroup {
-
+  margin-top: 20px;
 }
 li {
   display: block;
+  border: 2px solid grey;
   max-width: 200px;
   height: auto;
   padding: 5px;
@@ -71,7 +72,7 @@ input[type="submit"] {
   cursor: pointer;
 }
 input[type="submit"]:hover {
-  background-color: #1f6191;
+  background-color: #29343c;
 }
 button {
   width: 168px;
@@ -81,18 +82,16 @@ button {
 }
 .formContainer {
   width: auto;
-  max-height: 300px;
-  text-align: center;
-  border: 2px solid black;
-  margin: 20px 0px 20px 0;
-  margin-right: 20px;
+  height: 300px;
+  margin-right: 40px;
 }
 .removeButton {
-  width: 10px;
   color: red;
   background: none;
   border: none;
+  text-align: right;
   cursor: pointer;
+  font-size: 30px;
   
 }
 

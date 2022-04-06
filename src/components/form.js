@@ -1,18 +1,24 @@
-import React from "react";
+import React, {useState,useMemo} from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
-import Filter from "./filter";
 import Sort from "./sortby";
 
 const Form = () => {
   let [categoryCounter, setCategoryCounter] = useLocalStorage(
     "categoryCounter",
-    [0, 0, 0, 0]
+    0
   );
   let [productCounter, setProductCounter] = useLocalStorage(
     "productCounter",
     0
   );
+  let [filteredCategory, setFilteredCategory] = useState();
+
+  function handleCategoryChange(event) {
+    setFilteredCategory(event.target.value);
+  }
+
+
 
   const {
     register,
@@ -27,7 +33,6 @@ const Form = () => {
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
     setProductCounter(parseInt(productCounter + 1));
-    setCategoryCounter();
     console.log(data);
   };
   const removeProduct = (index) => {
@@ -40,13 +45,25 @@ const Form = () => {
   const resetState = () => {
     localStorage.clear();
   };
-  const onDragStart = (ev, id) => {
-    ev.dataTransfer.setCompletedForms("id", id);
+
+  const removeAllItem = () => {
+    setCompletedForms((oldArray) => []);
+    setProductCounter((productCounter = 0));
+    localStorage.clear();
   };
-const removeAllItem = () => {
-    setCompletedForms((oldArray) => [])
-    setProductCounter(productCounter = 0)
-}
+  function getFilteredList() {
+    if (!filteredCategory) {
+      return completedForms;
+    }
+    return completedForms.filter(
+      (form) => form.type === filteredCategory
+    );
+  }
+  var filteredList = useMemo(getFilteredList, [
+    filteredCategory,
+    completedForms,
+  ]);
+
   return (
     <div className="flex">
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
@@ -97,14 +114,16 @@ const removeAllItem = () => {
           <p className="error">
             {" "}
             {errors.price?.type === "required" && "price is required"}
+            {errors.price?.type === "min" && "minimum price is 1"}
+            {errors.price?.type === "max" && "maximum price is 20000"}
           </p>
         </label>
         <label>
           Category:
           <select {...register("type")}>
-            <option value="podzespoły">podzespoły</option>
-            <option value="urządzenia peryferyjne">
-              urządzenia peryferyjne
+            <option value="Podzespoły">Podzespoły</option>
+            <option value="Urządzenia peryferyjne">
+              Urządzenia peryferyjne
             </option>
             <option value="Oprogramowanie">Oprogramowanie</option>
             <option value="Inne">Inne</option>
@@ -118,31 +137,26 @@ const removeAllItem = () => {
       </form>
 
       <div className="grid">
-        <div className="formContainer">
-          <ul>
-            {completedForms &&
-              completedForms.map((form, index) => (
-                <li
-                  onDrop={(e) => this.onDrop(e, "complete")}
-                  onDragStart={(e) => this.onDragStart(e, form.productname)}
-                  draggable
-                  key={index}
-                >
-                    <div className="flex">
-                    <select>
-                  
-                    <option> {form.productname}</option>
-                    <option> Description: {form.description}</option>
-                    <option> Type: {form.type}</option>
-                    <option> Price: {form.price}</option>
-                  </select>
+        <div className="buttonsGroup">
+          <Sort
+            completedForms={completedForms}
+            setCompletedForms={setCompletedForms}
+          />
 
-                  <button className="removeButton" onClick={() => removeProduct(index)}>x</button>
-                    </div>
-              
-                </li>
-              ))}
-          </ul>
+          <button onClick={() => resetState()}>toggle dark</button>
+          <button onClick={() => removeAllItem()}>remove all items</button>
+          <button onClick={() => resetState()}>clear state</button>
+          <select
+      name="category-list"
+      id="category-list"
+      onChange={handleCategoryChange}
+    >
+      <option value="">Filter by Category</option>
+      <option value="Podzespoły">Podzespoły</option>
+      <option value="Urządzenia peryferyjne">Urządzenia peryferyjne</option>
+      <option value="Oprogramowanie">Oprogramowanie</option>
+      <option value="Inne">Inne</option>
+    </select>
         </div>
         <div className="flex">
           <h2>
@@ -156,17 +170,25 @@ const removeAllItem = () => {
           <h2>Liczba produktów: {productCounter}</h2>
           <h2>kategorie: {categoryCounter}</h2>
         </div>
+        <div className="formContainer">
+          <ul>
+            {completedForms &&
+              filteredList.map((form, index) => (
+                <li draggable key={index}>
+                  <button
+                    className="removeButton"
+                    onClick={() => removeProduct(index)}
+                  >
+                    x
+                  </button>
 
-        <div className="buttonsGroup">
-          <Sort
-            completedForms={completedForms}
-            setCompletedForms={setCompletedForms}
-          />
-
-          <button onClick={() => resetState()}>toggle dark</button>
-          <button onClick={() => removeAllItem()}>remove all items</button>
-          <button onClick={() => resetState()}>clear state</button>
-          <Filter />
+                  <p><b>Name:</b> {form.productname}</p>
+                  <p><b>Description:</b> {form.description}</p>
+                  <p><b>Type:</b> {form.type}</p>
+                  <p><b>Price:</b> {form.price}</p>
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
     </div>
