@@ -67,6 +67,7 @@ ul {
   gap: 10px;
 }
 .buttonsGroup {
+  width: 900px;
   margin:20px auto;
 }
 li {
@@ -94,8 +95,7 @@ button {
   text-align: center;
 }
 .formContainer {
-  width: auto;
-  height: 300px;
+  margin: auto;
 }
 .removeButton {
   color: red;
@@ -116,6 +116,11 @@ button {
   }
   .formCard {
     margin: 20px auto;
+  }
+  .buttonsGroup {
+    width: 100%;
+    margin:20px auto;
+    text-align: center;
   }
 
 }

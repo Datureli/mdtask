@@ -112,7 +112,6 @@ const Form = (props) => {
             </option>
             <option value="Oprogramowanie">Oprogramowanie</option>
             <option value="Inne">Inne</option>
-            <option value={newCategory}>{newCategory}</option>
           </select>
           <p className="error">
             {errors.type?.type === "required" && "type is required"}
@@ -136,11 +135,12 @@ const Form = (props) => {
           <button onClick={() => removeAllItem()}>remove all items</button>
           <ClearState />
           <Filter setFilteredCategory={setFilteredCategory} />
-    {//      <input type="text" placeholder="new category" onChange={handleCategory} />
-     //     <button onClick={addNewCategory}>ok</button>
-    }
+
         </div>
-      
+        <div className="flex">
+          <TotalPrice completedForms={completedForms} />
+          <h2>Liczba produktów: {productCounter}</h2>
+        </div>
         <div className="formContainer">
           <ul>
             {completedForms &&
@@ -168,11 +168,6 @@ const Form = (props) => {
                 </li>
               ))}
           </ul>
-          
-        </div>
-        <div className="flex">
-          <TotalPrice completedForms={completedForms} />
-          <h2>Liczba produktów: {productCounter}</h2>
         </div>
       </div>
     </div>

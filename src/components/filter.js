@@ -1,9 +1,7 @@
 const Filter = (props) => {
-
   function handleCategoryChange(event) {
     props.setFilteredCategory(event.target.value);
   }
-  
 
   return (
     <select
