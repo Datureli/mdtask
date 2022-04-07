@@ -112,6 +112,7 @@ const Form = (props) => {
             </option>
             <option value="Oprogramowanie">Oprogramowanie</option>
             <option value="Inne">Inne</option>
+
           </select>
           <p className="error">
             {errors.type?.type === "required" && "type is required"}
