@@ -3,6 +3,7 @@ const Filter = (props) => {
     props.setFilteredCategory(event.target.value);
   }
 
+  
   return (
     <select
       name="category-list"

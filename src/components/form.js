@@ -7,22 +7,15 @@ import Filter from "./filter";
 import ClearState from "./resetstate";
 
 const Form = (props) => {
-  let [productCounter, setProductCounter] = useLocalStorage(
-    "productCounter",
-    0
-  );
+  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
   let [filteredCategory, setFilteredCategory] = useState();
-  let [newCategory,setNewCategory] = useLocalStorage("newcategory","")
+  let [completedForms, setCompletedForms] = useLocalStorage("completedForms","");
+  let { register,formState: { errors },handleSubmit,reset} = useForm();
 
-  const { register,formState: { errors },handleSubmit,} = useForm();
-  let [completedForms, setCompletedForms] = useLocalStorage(
-    "completedForms",
-    ""
-  );
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
-    setProductCounter(parseInt(productCounter + 1));
-    console.log(data);
+    setProductCounter(productCounter + 1);   
+    reset()     
   };
   const removeProduct = (index) => {
     setCompletedForms([
@@ -32,11 +25,9 @@ const Form = (props) => {
     setProductCounter(productCounter - 1);
   };
 
-
   const removeAllItem = () => {
     setCompletedForms((oldArray) => []);
     setProductCounter((productCounter = 0));
-    localStorage.clear();
   };
   function getFilteredList() {
     if (!filteredCategory) {
@@ -44,7 +35,7 @@ const Form = (props) => {
     }
     return completedForms.filter((form) => form.type === filteredCategory);
   }
-  let filteredList = useMemo(getFilteredList, [
+  const filteredList = useMemo(getFilteredList, [
     filteredCategory,
     completedForms,
   ]);
@@ -128,8 +119,8 @@ const Form = (props) => {
           <Sort
             completedForms={completedForms}
             setCompletedForms={setCompletedForms}
-          />
 
+          />
           <button onClick={props.switchTheme}>
             {props.theme === "light" ? "Dark" : "light"}
           </button>
@@ -140,7 +131,7 @@ const Form = (props) => {
         </div>
         <div className="flex">
           <TotalPrice completedForms={completedForms} />
-          <h2>Liczba produktów: {productCounter}</h2>
+          <h2>number of products: {productCounter}</h2>
         </div>
         <div className="formContainer">
           <ul>
@@ -149,23 +140,14 @@ const Form = (props) => {
                 <li draggable key={index}>
                   <button
                     className="removeButton"
-                    onClick={() => removeProduct(index)}
-                  >
+                    onClick={() => removeProduct(index)}>
                     x
                   </button>
 
-                  <p>
-                    <b>Name:</b> {form.productname}
-                  </p>
-                  <p>
-                    <b>Description:</b> {form.description}
-                  </p>
-                  <p>
-                    <b>Type:</b> {form.type}
-                  </p>
-                  <p>
-                    <b>Price:</b> {form.price}
-                  </p>
+                  <p> <b>Name:</b> {form.productname} </p>
+                  <p> <b>Description:</b> {form.description} </p>
+                  <p> <b>Type:</b> {form.type} </p>
+                  <p> <b>Price:</b> {form.price} </p>
                 </li>
               ))}
           </ul>
