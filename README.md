@@ -10,6 +10,7 @@ It is an application for creating lists via a form
 
 ## Features
 * inputs in form with validation
+* show errors on wrong validation
 * send form on submit
 * remove form on click
 * removeAll button
