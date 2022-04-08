@@ -26,12 +26,12 @@ It is an application for creating lists via a form
 
 ## Technologies
 Project is created with:
-"react": "^18.0.0",
-"react-calendar": "^3.7.0",
-"react-dom": "^18.0.0",
-"react-hook-form": "^7.29.0",
-"react-scripts": "5.0.0",
-"use-local-storage": "^2.3.6"
+* "react": "^18.0.0",
+* "react-calendar": "^3.7.0",
+* "react-dom": "^18.0.0",
+* "react-hook-form": "^7.29.0",
+* "react-scripts": "5.0.0",
+* "use-local-storage": "^2.3.6"
 
 
 ## Status
