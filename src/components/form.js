@@ -10,7 +10,7 @@ const Form = (props) => {
   let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
   let [filteredCategory, setFilteredCategory] = useState();
   let [completedForms, setCompletedForms] = useLocalStorage("completedForms","");
-  let { register,formState: { errors },handleSubmit,reset} = useForm();
+  let { register,formState: { errors },handleSubmit,reset,setValue} = useForm();
 
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
@@ -45,8 +45,10 @@ const Form = (props) => {
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
         <h1>New product form</h1>
         <label>
+       
           Product name
           <input
+            name="productname"
             {...register("productname", {
               required: true,
               minLength: 3,
@@ -84,6 +86,7 @@ const Form = (props) => {
         <label>
           Price:
           <input
+          name="price"
             type="number"
             {...register("price", { required: true, min: 1, max: 20000 })}
           />
@@ -121,6 +124,13 @@ const Form = (props) => {
             setCompletedForms={setCompletedForms}
 
           />
+        <button type="button" onClick={() => {
+            setValue("productname", "keyboard")
+            setValue("description","to jest klawiatura")
+            setValue("price",212)
+        }}>
+        Fill the input 
+      </button>
           <button onClick={props.switchTheme}>
             {props.theme === "light" ? "Dark" : "light"}
           </button>

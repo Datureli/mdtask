@@ -66,17 +66,18 @@ ul {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
 }
-.buttonsGroup {
-  width: 900px;
-  margin:20px auto;
-}
+
 li {
   display: block;
   background: rgb(161, 138, 138);
   max-width: 250px;
+  height: 230px;
   width: 200px;
-  height: auto;
   margin: auto;
+}
+.buttonsGroup {
+  width: 900px;
+  margin:20px auto;
 }
 input[type="submit"] {
   width: 80px;
@@ -106,7 +107,7 @@ button {
   font-size: 30px;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1200px) {
   .flex {
     display: grid;
   }
