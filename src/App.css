@@ -74,8 +74,10 @@ li {
   width: 250px;
 }
 .buttonsGroup {
-  width: 700px;
-  margin: 20px auto;
+  width: 830px;
+  text-align: center;
+  justify-content: center;
+  margin: 20px auto 0 auto;
 }
 .details {
   text-justify: left;

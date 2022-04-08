@@ -12,14 +12,14 @@ code {
     monospace;
 }
 :root {
-  --background: white;
-  --text-primary: black;
-  --text-secondary: royalblue;
-  --accent: purple;
+  --background: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4169e1;
+  --accent: #800080;
 }
 [data-theme='dark'] {
-  --background: black;
-  --text-primary: white;
-  --text-secondary: grey;
-  --accent: darkred;
+  --background: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #808080;
+  --accent: #8b0000;
 }
