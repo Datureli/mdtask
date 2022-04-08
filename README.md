@@ -22,6 +22,7 @@ It is an application for creating lists via a form
 * data picker input with react-calendar
 * sort list by name,description,price and category
 * filter list with category
+* filling the form button
 
 
 ## Technologies
