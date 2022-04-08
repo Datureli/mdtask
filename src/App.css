@@ -62,22 +62,22 @@ select {
 }
 ul {
   display: grid;
-  margin-top: 90px;
+  margin-top: 60px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
 }
 
 li {
   display: block;
-  background: rgb(161, 138, 138);
+  background: #a18a8a;
   max-width: 250px;
-  height: 230px;
-  width: 200px;
+  height: 300px;
+  width: 250px;
   margin: auto;
 }
 .buttonsGroup {
-  width: 900px;
-  margin:20px auto;
+  width: 700px;
+  margin: 20px auto;
 }
 input[type="submit"] {
   width: 80px;
@@ -99,12 +99,33 @@ button {
   margin: auto;
 }
 .removeButton {
-  color: red;
+  color: #ff0000;
   background: none;
   border: none;
   text-align: right;
   cursor: pointer;
   font-size: 30px;
+}
+.calendar {
+  border: 2px solid #000000;
+  border-radius: 10px;
+  color: #000000;
+}
+.calendar,.data-button {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+}
+.react-calendar.hide {
+  display: none;
+}
+.data-button {
+  width: 20px;
+  border: none;
+  background: none;
+}
+.hide {
+  display: none;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -120,8 +141,7 @@ button {
   }
   .buttonsGroup {
     width: 100%;
-    margin:20px auto;
+    margin: 20px auto;
     text-align: center;
   }
-
 }

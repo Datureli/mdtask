@@ -1,21 +1,41 @@
 import React, { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import Sort from "./sortby";
 import TotalPrice from "./totalprice";
 import Filter from "./filter";
 import ClearState from "./resetstate";
+import FormDetails from "./formdetails";
 
 const Form = (props) => {
-  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
+  let [productCounter, setProductCounter] = useLocalStorage(
+    "productCounter",
+    0
+  );
   let [filteredCategory, setFilteredCategory] = useState();
-  let [completedForms, setCompletedForms] = useLocalStorage("completedForms","");
-  let { register,formState: { errors },handleSubmit,reset,setValue} = useForm();
+  let [completedForms, setCompletedForms] = useLocalStorage(
+    "completedForms",
+    ""
+  );
+
+  let {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    setValue,
+  } = useForm();
+
+  const [value, onChange] = useState(new Date());
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const onSubmit = (data) => {
     setCompletedForms((oldArray) => [...oldArray, data]);
-    setProductCounter(productCounter + 1);   
-    reset()     
+    setProductCounter(productCounter + 1);
+    reset();
+    setShowCalendar(false);
   };
   const removeProduct = (index) => {
     setCompletedForms([
@@ -35,6 +55,7 @@ const Form = (props) => {
     }
     return completedForms.filter((form) => form.type === filteredCategory);
   }
+
   const filteredList = useMemo(getFilteredList, [
     filteredCategory,
     completedForms,
@@ -45,7 +66,6 @@ const Form = (props) => {
       <form className="formCard" onSubmit={handleSubmit(onSubmit)}>
         <h1>New product form</h1>
         <label>
-       
           Product name
           <input
             name="productname"
@@ -86,7 +106,7 @@ const Form = (props) => {
         <label>
           Price:
           <input
-          name="price"
+            name="price"
             type="number"
             {...register("price", { required: true, min: 1, max: 20000 })}
           />
@@ -112,26 +132,46 @@ const Form = (props) => {
             {errors.type?.type === "required" && "type is required"}
           </p>
         </label>
+        <label>
+          date of purchase
+          <input
+            {...register("data")}
+            value={value.toLocaleDateString()}
+            onFocus={() => setShowCalendar(true)}
+          />
+          <Calendar
+            key={value}
+            className={[showCalendar ? "" : "hide", "calendar"]}
+            onChange={onChange}
+            value={value}
+          />
+        </label>
 
-        <input type="submit" value="Wyślij" />
+        <input type="submit" value="submit" />
       </form>
-
+      <button
+        className={showCalendar ? "data-button" : "hide"}
+        onClick={() => setShowCalendar(false)}
+      >
+        x
+      </button>
       <div className="grid">
         <div className="buttonsGroup">
-          <button>add category</button>
           <Sort
             completedForms={completedForms}
             setCompletedForms={setCompletedForms}
-
           />
-        <button type="button" onClick={() => {
-            setValue("productname", "keyboard")
-            setValue("description","to jest klawiatura")
-            setValue("price",212)
-            setValue("type", 'Oprogramowanie');
-        }}>
-        Fill the input 
-      </button>
+          <button
+            type="button"
+            onClick={() => {
+              setValue("productname", "keyboard");
+              setValue("description", "to jest klawiatura");
+              setValue("price", 212);
+              setValue("type", "Oprogramowanie");
+            }}
+          >
+            Fill the input
+          </button>
           <button onClick={props.switchTheme}>
             {props.theme === "light" ? "Dark" : "light"}
           </button>
@@ -143,24 +183,11 @@ const Form = (props) => {
           <TotalPrice completedForms={completedForms} />
           <h2>number of products: {productCounter}</h2>
         </div>
-        <div className="formContainer">
-          <ul>
-            {completedForms &&
-              filteredList.map((form, index) => (
-                <li draggable key={index}>
-                  <button
-                    className="removeButton"
-                    onClick={() => removeProduct(index)}>
-                    x
-                  </button>
-                  <p> <b>Name:</b> {form.productname} </p>
-                  <p> <b>Description:</b> {form.description} </p>
-                  <p> <b>Type:</b> {form.type} </p>
-                  <p> <b>Price:</b> {form.price} </p>
-                </li>
-              ))}
-          </ul>
-        </div>
+        <FormDetails
+          completedForms={completedForms}
+          filteredList={filteredList}
+          removeProduct={removeProduct}
+        />
       </div>
     </div>
   );
