@@ -21,10 +21,12 @@ this project is an form product app
 
 ## Technologies
 Project is created with:
-* "react": "^17.0.2"
-* "react-dom": "^17.0.2"
-* "react-router-dom": "^6.2.2"
-* "use-local-storage": "^2.3.6"
+"react": "^18.0.0",
+"react-calendar": "^3.7.0",
+"react-dom": "^18.0.0",
+"react-hook-form": "^7.29.0",
+"react-scripts": "5.0.0",
+"use-local-storage": "^2.3.6"
 
 
 ## Status
