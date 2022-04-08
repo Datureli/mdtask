@@ -1,23 +1,20 @@
 .App {
   color: var(--text-primary);
   background-color: var(--background);
-  font-size: large;
   transition: all 0.5s;
   text-align: center;
   overflow-x: hidden;
 }
 .App-header {
   background-color: #282c34;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 .flex {
   display: flex;
-  text-align: center;
   margin: auto;
 }
 
@@ -38,12 +35,14 @@ h2 {
 }
 .error {
   display: flex;
+  font-size: 14px;
   color: red;
-  margin: 5px auto;
+  margin: 0 auto;
   text-align: center;
 }
 
 .formCard {
+  min-width: 400px;
   background: #545454;
   color: #ffffff;
 }
@@ -58,31 +57,33 @@ select {
   width: 168px;
   height: 30px;
   text-align: center;
-  margin: auto;
 }
 ul {
   display: grid;
-  margin-top: 60px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin: auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
 }
 
 li {
   display: block;
   background: #a18a8a;
-  max-width: 250px;
-  height: 300px;
+  max-width: 450px;
+  height: 200px;
+  padding: 10px;
   width: 250px;
-  margin: auto;
 }
 .buttonsGroup {
   width: 700px;
   margin: 20px auto;
 }
+.details {
+  text-justify: left;
+  text-align: left;
+}
 input[type="submit"] {
   width: 80px;
   height: 30px;
-  padding: 0;
   border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
@@ -93,16 +94,14 @@ input[type="submit"]:hover {
 button {
   width: 168px;
   height: 30px;
-  text-align: center;
-}
-.formContainer {
-  margin: auto;
 }
 .removeButton {
+  width: 20px;
   color: #ff0000;
   background: none;
   border: none;
-  text-align: right;
+  float: right;
+  margin-right: 10px;
   cursor: pointer;
   font-size: 30px;
 }
@@ -111,18 +110,18 @@ button {
   border-radius: 10px;
   color: #000000;
 }
-.calendar,.data-button {
+.calendar,
+.data-button {
   position: absolute;
   top: 50%;
   right: 50%;
 }
-.react-calendar.hide {
-  display: none;
-}
 .data-button {
-  width: 20px;
+  width: 30px;
+  font-size: 20px;
   border: none;
   background: none;
+  cursor: pointer;
 }
 .hide {
   display: none;
@@ -133,8 +132,13 @@ button {
     display: grid;
   }
   ul {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 5px;
+  }
+  li {
+    justify-content: center;
+    text-align: center;
+    margin: auto;
   }
   .formCard {
     margin: 20px auto;

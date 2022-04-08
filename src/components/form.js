@@ -10,23 +10,11 @@ import ClearState from "./resetstate";
 import FormDetails from "./formdetails";
 
 const Form = (props) => {
-  let [productCounter, setProductCounter] = useLocalStorage(
-    "productCounter",
-    0
-  );
+  let [productCounter, setProductCounter] = useLocalStorage("productCounter",0);
   let [filteredCategory, setFilteredCategory] = useState();
-  let [completedForms, setCompletedForms] = useLocalStorage(
-    "completedForms",
-    ""
-  );
+  let [completedForms, setCompletedForms] = useLocalStorage("completedForms","");
 
-  let {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-    setValue,
-  } = useForm();
+  let {register,formState: { errors },handleSubmit,reset,setValue,} = useForm();
 
   const [value, onChange] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
@@ -37,6 +25,7 @@ const Form = (props) => {
     reset();
     setShowCalendar(false);
   };
+
   const removeProduct = (index) => {
     setCompletedForms([
       ...completedForms.slice(0, index),
@@ -49,17 +38,18 @@ const Form = (props) => {
     setCompletedForms((oldArray) => []);
     setProductCounter((productCounter = 0));
   };
+
+  const filteredList = useMemo(getFilteredList, [
+    filteredCategory,
+    completedForms,
+  ]);
+
   function getFilteredList() {
     if (!filteredCategory) {
       return completedForms;
     }
     return completedForms.filter((form) => form.type === filteredCategory);
   }
-
-  const filteredList = useMemo(getFilteredList, [
-    filteredCategory,
-    completedForms,
-  ]);
 
   return (
     <div className="flex">
@@ -84,7 +74,7 @@ const Form = (props) => {
           </p>
         </label>
         <label>
-          Description:
+          Description
           <input
             onChange={(e) => setCompletedForms(e.target.value)}
             type="text"
@@ -104,7 +94,7 @@ const Form = (props) => {
           </p>
         </label>
         <label>
-          Price:
+          Price
           <input
             name="price"
             type="number"
@@ -118,8 +108,8 @@ const Form = (props) => {
           </p>
         </label>
         <label>
-          Category:
-          <select {...register("type")}>
+          Category
+          <select {...register("type",{required: true})}>
             <option value=""></option>
             <option value="Podzespoły">Podzespoły</option>
             <option value="Urządzenia peryferyjne">
@@ -129,7 +119,7 @@ const Form = (props) => {
             <option value="Inne">Inne</option>
           </select>
           <p className="error">
-            {errors.type?.type === "required" && "type is required"}
+            {errors.type?.type === "required" && "category is required"}
           </p>
         </label>
         <label>
@@ -149,12 +139,13 @@ const Form = (props) => {
 
         <input type="submit" value="submit" />
       </form>
+
       <button
         className={showCalendar ? "data-button" : "hide"}
-        onClick={() => setShowCalendar(false)}
-      >
+        onClick={() => setShowCalendar(false)}>
         x
       </button>
+
       <div className="grid">
         <div className="buttonsGroup">
           <Sort
@@ -179,6 +170,7 @@ const Form = (props) => {
           <ClearState />
           <Filter setFilteredCategory={setFilteredCategory} />
         </div>
+        
         <div className="flex">
           <TotalPrice completedForms={completedForms} />
           <h2>number of products: {productCounter}</h2>

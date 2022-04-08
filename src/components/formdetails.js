@@ -10,11 +10,13 @@ const FormDetails = (props) => {
                   onClick={() => props.removeProduct(index)}>
                   x
                 </button>
+                <div className="details">
                 <p> <b>Name:</b> {form.productname} </p>
                 <p> <b>Description:</b> {form.description} </p>
                 <p> <b>Type:</b> {form.type} </p>
                 <p> <b>Price:</b> {form.price} </p>
                 <p> <b>Date of purchase:</b> {form.data} </p>
+                </div>
               </li>
             ))}
         </ul>
