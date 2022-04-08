@@ -6,17 +6,21 @@
 * [Setup](#setup)
 
 ## General info
-this project is an form product app
+It is an application for creating lists via a form
 
 ## Features
-* inputs in forms with validation
+* inputs in form with validation
 * send form on submit
 * remove form on click
+* removeAll button
 * calculate total price
 * calculate total amount of products
 * store data in localStorage
 * clearStorage button
 * light and dark theme
+* data picker input with react-calendar
+* sort list by name,description,price and category
+* filter list with category
 
 
 ## Technologies
@@ -36,9 +40,9 @@ working on
 To run this project, install it locally using npm:
 
 ```
-$ git clone https://github.com/Datureli/PokemonTask.git
+$ git clone https://github.com/Datureli/mdtask.git
+$ cd mdtask
 $ npm install
-$ cd pokemontask
 $ npm start
 ```
 
