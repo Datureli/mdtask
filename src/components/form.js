@@ -100,25 +100,25 @@ const Form = (props) => {
         <label>
           Category:
           <select {...register("type")}>
+            <option value=""></option>
             <option value="Podzespoły">Podzespoły</option>
             <option value="Urządzenia peryferyjne">
               Urządzenia peryferyjne
             </option>
             <option value="Oprogramowanie">Oprogramowanie</option>
             <option value="Inne">Inne</option>
-
           </select>
           <p className="error">
             {errors.type?.type === "required" && "type is required"}
           </p>
         </label>
-  
 
         <input type="submit" value="Wyślij" />
       </form>
 
       <div className="grid">
         <div className="buttonsGroup">
+          <button>add category</button>
           <Sort
             completedForms={completedForms}
             setCompletedForms={setCompletedForms}
@@ -128,6 +128,7 @@ const Form = (props) => {
             setValue("productname", "keyboard")
             setValue("description","to jest klawiatura")
             setValue("price",212)
+            setValue("type", 'Oprogramowanie');
         }}>
         Fill the input 
       </button>
@@ -137,7 +138,6 @@ const Form = (props) => {
           <button onClick={() => removeAllItem()}>remove all items</button>
           <ClearState />
           <Filter setFilteredCategory={setFilteredCategory} />
-
         </div>
         <div className="flex">
           <TotalPrice completedForms={completedForms} />
@@ -153,7 +153,6 @@ const Form = (props) => {
                     onClick={() => removeProduct(index)}>
                     x
                   </button>
-
                   <p> <b>Name:</b> {form.productname} </p>
                   <p> <b>Description:</b> {form.description} </p>
                   <p> <b>Type:</b> {form.type} </p>
